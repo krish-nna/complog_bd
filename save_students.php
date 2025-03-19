@@ -65,10 +65,8 @@ for ($i = 1; $i < count($data); $i++) {
 
     // Validate row format (expecting 8 columns)
     if (count($row) < 8) {
-        $allValid = false;
-        $errorMessage = "Invalid row format at row " . ($i + 1) . ". Expected 8 columns.";
-        break;
-    }
+        $errorMessage .= "Invalid row format at row " . ($i + 1) . ". Expected 8 columns. ";
+        continue;
 
     // Extract data from the row; Excel columns in order:
     // student_id, name, class, phno, division, rollno, email, rank_status
@@ -95,6 +93,7 @@ for ($i = 1; $i < count($data); $i++) {
     $rollno = intval($rollno);
     // Convert rank_status to string (as the enum expects string values)
     $rank_status = strval($rawRankStatus);
+    error_log("Processing row $i: " . json_encode($row));
 
     // Prepare the SQL query for insertion
     $query = "INSERT INTO stdata (student_id, name, class, phno, division, rollno, email, rank_status, id) 
