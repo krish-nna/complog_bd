@@ -75,7 +75,8 @@ for ($i = 1; $i < count($data); $i++) {
     // Validate required fields except rank_status.
     // For rank_status, allow a value of 0. Check explicitly for null or empty string.
     if (empty($student_id) || empty($name) || empty($class) || empty($phno) || empty($division) || empty($rollno) || empty($email) ||
-        ($rawRankStatus === null || $rawRankStatus === "")) {
+    ($rawRankStatus === null || $rawRankStatus === "" && $rawRankStatus !== "0")) {
+
         $allValid = false;
         $errorMessage = "Missing data at row " . ($i + 1);
         break;
@@ -121,4 +122,5 @@ if ($allValid) {
 
 // Close the connection
 pg_close($conn);
+}
 ?>
